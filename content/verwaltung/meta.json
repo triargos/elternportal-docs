@@ -1,4 +1,12 @@
 {
   "root": true,
-  "pages": ["index"]
+  "pages": [
+    "index",
+    "aenderungsantraege",
+    "organisation",
+    "online-anmeldung",
+    "einsendungen",
+    "dokumente",
+    "einstellungen"
+  ]
 }
