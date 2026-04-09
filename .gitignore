@@ -1,5 +1,6 @@
 node_modules/
 .source/
 .react-router/
+.vite/
 build/
 dist/
