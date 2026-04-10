@@ -1,7 +1,6 @@
 {
   "root": true,
   "pages": [
-    "index",
     "anmeldung",
     "familie",
     "adresse",

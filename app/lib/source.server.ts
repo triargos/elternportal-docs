@@ -48,6 +48,17 @@ function extractSidebarItems(
   return items;
 }
 
+export function getSidebar(source: ReturnType<typeof loader>): SidebarItem[] {
+  return extractSidebarItems(
+    source.pageTree.children as Array<{
+      type: string;
+      name: unknown;
+      url?: string;
+      children?: unknown[];
+    }>,
+  );
+}
+
 export async function loadDocsPage(
   source: ReturnType<typeof loader>,
   slugs: string[],
