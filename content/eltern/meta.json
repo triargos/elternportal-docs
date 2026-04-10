@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "pages": [
+    "index",
+    "anmeldung",
+    "familie",
+    "adresse",
+    "dokumente",
+    "online-anmeldung",
+    "faq"
+  ]
+}
