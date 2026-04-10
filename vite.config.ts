@@ -5,6 +5,8 @@ import { defineConfig } from "vite";
 import fumadocs from "fumadocs-mdx/vite";
 import { eltern, verwaltung } from "./source.config";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -15,5 +17,10 @@ export default defineConfig({
     tailwindcss(),
     fumadocs({ eltern, verwaltung }),
     reactRouter(),
+    cloudflare({
+      viteEnvironment: {
+        name: "ssr"
+      }
+    })
   ],
 });
