@@ -1,3 +1,34 @@
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
+@plugin "@tailwindcss/typography";
+
+@import url("https://rsms.me/inter/inter.css");
+
+:root {
+  --color-fd-primary: #5e6ad2;
+  --color-fd-ring: #5e6ad2;
+}
+
+.dark {
+  --color-fd-primary: #7170ff;
+  --color-fd-ring: #7170ff;
+}
+
+html {
+  font-family:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  font-feature-settings:
+    "cv11", "ss01", "ss03", "cv02";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family:
+      "Inter var", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, sans-serif;
+  }
+}

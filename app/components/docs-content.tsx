@@ -1,10 +1,8 @@
 import { Link, useLocation } from "react-router";
-import {
-  SearchProvider,
-  useSearchContext,
-} from "fumadocs-ui/contexts/search";
+import { SearchProvider } from "fumadocs-ui/contexts/search";
 import DefaultSearchDialog from "fumadocs-ui/components/dialog/search-default";
 import { useCallback } from "react";
+import { DocsHeader } from "./docs-header";
 
 interface SidebarItem {
   title: string;
@@ -12,111 +10,46 @@ interface SidebarItem {
 }
 
 interface DocsContentProps {
-  title: string;
-  description: string;
   html: string;
   sidebar: SidebarItem[];
   section: "eltern" | "verwaltung";
 }
 
-const tabs = [
-  { label: "Eltern", href: "/eltern" },
-  { label: "Verwaltung", href: "/verwaltung" },
-];
-
-function SearchButton() {
-  const { setOpenSearch } = useSearchContext();
-
-  return (
-    <button
-      type="button"
-      onClick={() => setOpenSearch(true)}
-      className="flex items-center gap-2 rounded-md border border-fd-border bg-fd-secondary/50 px-3 py-1.5 text-sm text-fd-muted-foreground transition-colors hover:bg-fd-secondary"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.3-4.3" />
-      </svg>
-      Suche...
-      <kbd className="ml-2 hidden rounded bg-fd-muted px-1.5 py-0.5 text-xs sm:inline-block">
-        ⌘K
-      </kbd>
-    </button>
-  );
-}
-
 function DocsContentInner({
-  title,
-  description,
   html,
   sidebar,
 }: Omit<DocsContentProps, "section">) {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen flex-col bg-fd-background">
-      <header className="sticky top-0 z-10 border-b border-fd-border bg-fd-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          <Link to="/" className="text-lg font-semibold text-fd-foreground">
-            Elternportal Docs
-          </Link>
-          <SearchButton />
-        </div>
-        <div className="mx-auto max-w-7xl px-6">
-          <nav className="flex gap-4">
-            {tabs.map((tab) => (
-              <Link
-                key={tab.href}
-                to={tab.href}
-                className={`border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${
-                  location.pathname.startsWith(tab.href)
-                    ? "border-fd-primary text-fd-primary"
-                    : "border-transparent text-fd-muted-foreground hover:text-fd-foreground"
-                }`}
-              >
-                {tab.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
+    <div className="flex min-h-screen flex-col bg-fd-background text-[15px] leading-relaxed text-fd-foreground">
+      <DocsHeader />
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-6 py-8">
+      <div className="flex w-full flex-1">
         {sidebar.length > 0 && (
-          <aside className="hidden w-56 shrink-0 md:block">
-            <nav className="sticky top-24 space-y-1">
-              {sidebar.map((item) => (
-                <Link
-                  key={item.url}
-                  to={item.url}
-                  className={`block rounded-md px-3 py-2 text-sm transition-colors ${
-                    location.pathname === item.url
-                      ? "bg-fd-primary/10 font-medium text-fd-primary"
-                      : "text-fd-muted-foreground hover:text-fd-foreground"
-                  }`}
-                >
-                  {item.title}
-                </Link>
-              ))}
+          <aside className="hidden w-[280px] shrink-0 border-r border-fd-border/60 px-5 py-10 md:block">
+            <nav className="sticky top-24 flex flex-col gap-0.5">
+              {sidebar.map((item) => {
+                const active = location.pathname === item.url;
+                return (
+                  <Link
+                    key={item.url}
+                    to={item.url}
+                    className={`block rounded-md px-3 py-2 text-sm transition-colors ${
+                      active
+                        ? "bg-fd-muted font-medium text-fd-foreground"
+                        : "text-fd-muted-foreground hover:bg-fd-muted/50 hover:text-fd-foreground"
+                    }`}
+                  >
+                    {item.title}
+                  </Link>
+                );
+              })}
             </nav>
           </aside>
         )}
 
-        <article className="prose dark:prose-invert min-w-0 max-w-none flex-1">
-          <h1>{title}</h1>
-          {description && (
-            <p className="text-lg text-fd-muted-foreground">{description}</p>
-          )}
+        <article className="prose prose-neutral dark:prose-invert mx-auto min-w-0 max-w-[760px] flex-1 px-10 py-12 prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-fd-foreground prose-h1:text-3xl prose-h1:mb-2 prose-h1:text-center prose-h2:text-xl prose-h2:mt-12 prose-h2:mb-3 prose-h3:text-base prose-h3:mt-8 prose-p:text-fd-muted-foreground prose-p:leading-7 prose-li:text-fd-muted-foreground prose-li:leading-7 prose-strong:text-fd-foreground prose-strong:font-medium prose-a:text-fd-foreground prose-a:no-underline hover:prose-a:underline prose-code:text-fd-foreground prose-code:font-normal prose-code:before:content-none prose-code:after:content-none [&_h1_a]:text-fd-foreground [&_h2_a]:text-fd-foreground [&_h3_a]:text-fd-foreground [&_h4_a]:text-fd-foreground [&_h5_a]:text-fd-foreground [&_h6_a]:text-fd-foreground [&_h1_a]:no-underline [&_h2_a]:no-underline [&_h3_a]:no-underline [&_h4_a]:no-underline">
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </article>
       </div>
@@ -124,10 +57,7 @@ function DocsContentInner({
   );
 }
 
-export function DocsContent({
-  section,
-  ...rest
-}: DocsContentProps) {
+export function DocsContent({ section, ...rest }: DocsContentProps) {
   const SearchDialog = useCallback(
     (props: { open: boolean; onOpenChange: (open: boolean) => void }) => (
       <DefaultSearchDialog
